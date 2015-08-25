@@ -20,17 +20,10 @@ function createLamina(TipoLamina,Ancho,Alto,Valor,ValorCm){
   
   persistence.add(lamina);
   persistence.flush();
-  
-  var todasTareas = Lamina.all();
+}
 
-
-  todasTareas.list(null, function (results) {
-        results.forEach(function (r) {
-          console.log(r);
-      });
-  })
-  
-  
-} 
-
-createLamina("UNA CARAS",250,200,350000,279.454);
+function DeleteAllLaminas(){
+  Lamina.all().filter('id','<>', '').destroyAll(function(){
+        persistence.flush();
+  });
+}

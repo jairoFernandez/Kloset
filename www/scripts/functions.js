@@ -1,11 +1,19 @@
 persistence.store.websql.config(persistence, 'AppKloset','base de datos de appkloset', 5 * 1024 * 1024);
+var online = navigator.onLine;
 
 var app =  angular.module('app', ['onsen']);
 
 app.controller('InicioCtrl',function($http,SincronizarCtrl){
+	
 	var vm = this;
-
-	vm.sincroniza = SincronizarCtrl.getSincronizar();
+	
+	Lamina.all().count(function(registros){
+		if(registros > 0){
+			console.log("Hay un total de "+registros+" en la tabla Laminas...");
+		}else{
+			SincronizarCtrl.getSincronizar();
+		}
+	});
 });
 
 app.controller('ConfiguracionesCtrl',function(SincronizarCtrl){
@@ -23,40 +31,10 @@ function iniciar($http){
 	var vm = this;
 	
 	vm.name = 'App Kloset';
-	vm.catalogo = [];
-	vm.laminas = [];
 	
-
-	$http.get('http://apps.tucompualdia.net/appkloset/catalogo')
-			.success(function(response){
-			vm.catalogo = response;
-			
-			for(i=0; i<response.length; i++){
-				var tipoLamina = response[i]["tipoLamina"];
-				var ancho = response[i]["ancho"];
-				var alto = response[i]["alto"];
-				var valor = response[i]["valor"];	
-				var valorCm = response[i]["valorCm"];	
-
-
-				//GuardarLamina(tipoLamina,ancho,alto,valor,valorCm);
-
-			}
-
-
-			}).error(function(response){
-				ons.notification.alert({
-					title: 'Mensaje App kloset',
-					message: 'Ha habido un error'
-				});
-			});
-}
-function GuardarLamina(tipoLamina,ancho,alto,valor,valorCm){
-	
-}
-
-function querySuccess(tx,results){
-	console.log('consultando '+ results.rows.length);
+	vm.datos = Lamina.all().list(null,function(results){
+		vm.catalogo = results;
+	});
 
 }
 
@@ -67,52 +45,7 @@ function alerta(){
         });
 }
 
-// function CrearCatalogo(){
-// 	db.transaction(function(tx) {
-// 		tx.executeSql('DROP TABLE IF EXISTS Lamina');
-// 		tx.executeSql('CREATE TABLE IF NOT EXISTS Lamina(idLocal INTEGER PRIMARY KEY AUTOINCREMENT, tipoLamina TEXT, ancho DECIMAL, alto DECIMAL, valor DECIMAL, valorCm DECIMAL)');
-// 	}, errorCB, successCB);
-// }
 
-/// Creamos la Tabla Lamina
-//CrearCatalogo();
-
-function llenarCatalogo(response){
-		for(i=0; i<response.length; i++){
-			var tipoLamina = response[i]["tipoLamina"];
-			var ancho = response[i]["ancho"];
-			var alto = response[i]["alto"];
-			var valor = response[i]["valor"];	
-			var valorCm = response[i]["valorCm"];	
-
-			insertarLaminas(tipoLamina,ancho,alto,valor,valorCm);
-		}
-}
-
-function insertarLaminas(tipoLamina,ancho,alto,valor,valorCm){
-	db.transaction(function(tx) {
-		tx.executeSql('INSERT INTO Lamina(tipoLamina, ancho, alto, valor, valorCm) VALUES (?,?,?,?,?)', 
-					[tipoLamina,ancho,alto,valor,valorCm]);
-	});	
-}
-
-function ListarLaminas(tx){
-	tx.executeSql('SELECT * FROM Laminas',[],querySuccess,errorCB);
-}
-
-
-
-// Transaction error callback
-//
-function errorCB(tx, err) {
-    console.log("Error processing SQL: "+err.toString());
-}
-
-// Transaction success callback
-//
-function successCB() {
-    console.log("success!");
-}
 
 
 // function plas(){

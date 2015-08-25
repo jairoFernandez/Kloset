@@ -25,17 +25,18 @@ app.controller('ConfiguracionesCtrl',function(SincronizarCtrl){
 	}
 });
 
-app.controller('Actions',['$http',iniciar]);
+app.controller('Actions',['$http','$scope',iniciar]);
 
-function iniciar($http){
+function iniciar($http,$scope){
 	var vm = this;
 	
 	vm.name = 'App Kloset';
 	
 	vm.datos = Lamina.all().list(null,function(results){
 		vm.catalogo = results;
+	    $scope.$apply();
 	});
-
+    
 }
 
 function alerta(){

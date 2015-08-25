@@ -12,16 +12,19 @@ app.factory('SincronizarCtrl',function($http){
 			.success(function(response){
 			//vm.catalogo = response;
 			
-			for(i=0; i<response.length; i++){
-				var tipoLamina = response[i]["tipoLamina"];
-				var ancho = response[i]["ancho"];
-				var alto = response[i]["alto"];
-				var valor = response[i]["valor"];	
-				var valorCm = response[i]["valorCm"];	
+			DeleteAllLaminas();
+			setTimeout(function() {
+				for(i=0; i<response.length; i++){
+					var tipoLamina = response[i]["tipoLamina"];
+					var ancho = response[i]["ancho"];
+					var alto = response[i]["alto"];
+					var valor = response[i]["valor"];	
+					var valorCm = response[i]["valorCm"];	
 
-				createLamina(tipoLamina,ancho,alto,valor,valorCm);
-			}
-
+					createLamina(tipoLamina,ancho,alto,valor,valorCm);
+				}
+			}, 2000);
+				
 			  ons.notification.alert({
 			          title: 'Sincronización',
 			          messageHTML: 'Se ha sincronizado la base de datos<br/> Correctamente'

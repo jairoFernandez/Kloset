@@ -150,7 +150,7 @@ function successCB() {
 // 				});
 // }
 
-function checkConnection() {
+/*function checkConnection() {
     var networkState = navigator.connection.type;
 
     var states = {};
@@ -164,6 +164,6 @@ function checkConnection() {
     states[Connection.NONE]     = 'No network connection';
 
     alert('Connection type: ' + states[networkState]);
-}
+}*/
 
-checkConnection();
+//checkConnection();

@@ -25,17 +25,35 @@ app.controller('ConfiguracionesCtrl',function(SincronizarCtrl){
 	}
 });
 
-app.controller('Actions',['$http',iniciar]);
+app.controller('CalculadoraCtrl',function($scope){
+	var vm = this;
 
-function iniciar($http){
+	vm.datos = Lamina.all().list(null,function(results){
+		 	$scope.data = {
+		    singleSelect: [{ id: '0', name: 'Seleccione...' }],
+		    availableOptions: results,
+		   };
+	    $scope.$apply();
+	});
+
+	$('#btnCalculadora').click(function(){
+		alert('Ancho:' + $('#txtAncho').val() + 'x' + $('#txtAlto').val());
+	});
+
+});
+
+app.controller('Actions',['$http','$scope',iniciar]);
+
+function iniciar($http,$scope){
 	var vm = this;
 	
 	vm.name = 'App Kloset';
 	
 	vm.datos = Lamina.all().list(null,function(results){
 		vm.catalogo = results;
+	    $scope.$apply();
 	});
-
+    
 }
 
 function alerta(){

@@ -25,6 +25,53 @@ app.controller('ConfiguracionesCtrl',function(SincronizarCtrl){
 	}
 });
 
+app.controller('CalculadoraCtrl',function($scope){
+	var vm = this;
+
+	vm.datos = Lamina.all().list(null,function(results){
+		   $scope.data = {
+		   	 availableOptions: results,
+		   };
+	    $scope.$apply();
+	});
+
+	$('#btnCalculadora').click(function(){
+		$.validar();
+	});
+
+	$.validar = function(){
+		var ancho = $('#txtAncho').val();
+		var alto = $('#txtAlto').val();
+		var tabla = $('#repeatSelect').val();
+
+		console.log('Ancho:'+alto+' alto:'+ancho+' tabla: '+tabla);
+		
+		if(ancho == '' || ancho == null){
+			ons.notification.alert({
+				title: 'Error',
+				message: 'No olvide digitar el ancho'
+			});
+			$('#txtAncho').focus();
+		}else if(alto == '' || alto == null){
+			ons.notification.alert({
+				title: 'Error',
+				message: 'No olvide digitar el alto'
+			});
+			$('#txtAlto').focus();
+		}else if(tabla == '' || tabla == null){
+			ons.notification.alert({
+				title: 'Error',
+				message: 'No olvide seleccionar la tabla'
+			});
+			$('#repeatSelect').focus();
+		}else{
+			
+		}
+
+	}
+
+});
+
 app.controller('Actions',['$http','$scope',iniciar]);
 
 function iniciar($http,$scope){

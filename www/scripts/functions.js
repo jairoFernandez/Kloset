@@ -35,8 +35,37 @@ app.controller('CalculadoraCtrl',function($scope){
 	    $scope.$apply();
 	});
 
+      var valorcm = 0;
+      var ancho = 0;
+      var alto = 0;
+      var valorTotal = 0;
+      var textValor = "";
+
+      $('select#repeatSelect').on('change',function(){
+          valorcm = ($(this).val());
+          textValor = $( "#repeatSelect option:selected" ).text();
+      });
+
+      $('#txtAncho').on('change',function(){
+          ancho = $(this).val();
+      });
+
+      $('#txtAlto').on('change',function(){
+          alto = $(this).val();
+      });
+
+
 	$('#btnCalculadora').click(function(){
-		$.validar();
+		 $.validar();
+		  var valor = (ancho) * (alto) * (valorcm);
+          console.log(" Hola "+valorcm+" "+ ancho + " "+alto);
+          valorTotal = (valorTotal) + (valor); 
+          $('#resultados').append("<a href='#' id='"+valor.toFixed(2)+"'' class='elementoGuardado' ><i class='fa fa-trash-o'></i>  ("+textValor+")  $..."+valor.toFixed(2)+" - ("+ancho+"x"+alto+") - <br></a> ");
+
+         
+          $('#total').number(valorTotal,0);//text("$... "+valorTotal.toFixed(0));
+
+          $.eventoBorrar();
 	});
 
 	$.validar = function(){
@@ -65,10 +94,32 @@ app.controller('CalculadoraCtrl',function($scope){
 			});
 			$('#repeatSelect').focus();
 		}else{
-			
+
 		}
 
 	}
+
+
+	 $.eventoBorrar = function(){
+           $( ".elementoGuardado").unbind( "click" );
+           $('.elementoGuardado').click(function(event){
+                  event.preventDefault();
+                  $(this).hide();
+
+                 var valorOriginal = 0;
+                 var valorOriginal = valorTotal;
+                 var id = $(this).attr('id');
+                // alert("Valor clicado " + $(this).attr('id') );
+                 console.log("==================================");
+                 console.log("valor a restar " + id);
+                 console.log("valor original " + valorOriginal);
+                 valorTotal = valorOriginal  - id; 
+                 console.log("Valor final " + valorTotal); 
+                 console.log("==================================");
+                 $('#total').number(valorTotal,0);
+                 //$('#total').text("$... " + valorTotal.toFixed(0));
+           });
+      }
 
 });
 

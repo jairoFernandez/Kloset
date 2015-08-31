@@ -11,7 +11,19 @@
         // Handle the Cordova pause and resume events
         document.addEventListener( 'pause', onPause.bind( this ), false );
         document.addEventListener( 'resume', onResume.bind( this ), false );
-       
+        
+         //
+    
+
+        var JSONObject = {
+            id: 30,
+            ticker: 'Notification de prueba',
+            title: 'Hola Cristian',
+            message: "Bro mi primera notifación push con Onsen!!"
+        }; 
+
+        deviceNotification.add( JSONObject  );
+
 
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
     };

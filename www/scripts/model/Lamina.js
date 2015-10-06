@@ -1,5 +1,6 @@
 var Lamina = persistence.define("Lamina", {
   tipoLamina: "TEXT",
+  descripcion: "TEXT",
   ancho: "DECIMAL",
   alto: "DECIMAL",
   valor: "DECIMAL",
@@ -9,9 +10,10 @@ var Lamina = persistence.define("Lamina", {
 persistence.schemaSync();
 
 
-function createLamina(TipoLamina,Ancho,Alto,Valor,ValorCm){
+function createLamina(TipoLamina,Descripcion,Ancho,Alto,Valor,ValorCm){
   var lamina = new Lamina({
   tipoLamina : TipoLamina,
+  descripcion: Descripcion,
   ancho : Ancho,
   alto : Alto,
   valor : Valor,

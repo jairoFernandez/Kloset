@@ -31,9 +31,13 @@
     <title>App kloset</title>
     <script src="lib/jquery-2.1.4.min.js"></script>
     <script src="lib/jquery.number.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <script src="lib/jquery.ui.touch-punch.min.js"></script>
     <script src="scripts/functions.js"></script>
     <script src="scripts/model/Lamina.js"></script>
     <script src="scripts/Controller/SincronizarCtrl.js"></script>
+    <script src="scripts/Controller/CrearMuebleCtrl.js"></script>
+
 
 
     <style>
@@ -115,29 +119,29 @@
         <ons-page modifier="menu-page">
             <ons-toolbar modifier="transparent"></ons-toolbar>
 
-            <ons-list class="menu-list">
+                
+                <ons-list class="menu-list">
+                
                 <ons-list-item class="menu-item" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
                     <ons-icon icon="fa-plus"></ons-icon>
                     Inicio
                 </ons-list-item>
 
-                <ons-list-item class="menu-item" ng-click="menu.setMainPage('page2.html', {closeMenu: true})">
-                    <ons-icon icon="fa-bookmark"></ons-icon>
-                    Muebles
-                </ons-list-item>
-
-                <ons-list-item class="menu-item" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
-                    <ons-icon icon="fa-comment"></ons-icon>
-                    Crear
-                </ons-list-item>
                 <ons-list-item class="menu-item" ng-click="menu.setMainPage('calculadora.html', {closeMenu: true})">
                     <ons-icon icon="fa-desktop"></ons-icon>
                     Calculadora
                 </ons-list-item>
+
+                 <ons-list-item class="menu-item" ng-click="menu.setMainPage('crearMueble.html', {closeMenu: true})">
+                    <ons-icon icon="fa-comment"></ons-icon>
+                    Calculo de áreas
+                </ons-list-item>
+              
                 <ons-list-item class="menu-item" ng-click="menu.setMainPage('page3.html', {closeMenu: true})">
                     <ons-icon icon="fa-cog"></ons-icon>
                     Catálogo
                 </ons-list-item>
+               
             </ons-list>
 
             <br>
@@ -172,36 +176,38 @@
 
             <ons-row style="margin-top: 100px; text-align: center;">
                 <ons-col>
-                    <ons-button modifier="light" ng-click="menu.toggleMenu()">
-                        Toggle Menu
+                    <ons-button modifier="light" ng-click="menu.setMainPage('calculadora.html', {closeMenu: true})">
+                        Calculadora de tablas
                     </ons-button>
-                    <p style="color: #999; font-size: 13px;">Click "Toggle Menu" to close/open menu,
-                        <br> You can also swipe the page left/right.</p>
+                     <ons-button modifier="light" ng-click="menu.setMainPage('crearMueble.html', {closeMenu: true})">
+                        Calculadora de áreas
+                    </ons-button>
+                    <p style="color: #999; font-size: 13px;">Presiona para ir 
+                        <br> Versión demo</p>
                 </ons-col>
             </ons-row>
         </ons-page>
     </ons-template>
 
-    <ons-template id="page2.html">
-        <ons-page on-device-backbutton="alerta();">
+   <ons-template id="crearMueble.html">
+        <ons-page ng-controller="InicioCtrl as inicio">
             <ons-toolbar>
                 <div class="left">
                     <ons-toolbar-button ng-click="menu.toggle()">
                         <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
                     </ons-toolbar-button>
                 </div>
-                <div class="center">Demos</div>
+                <div class="center">Cálculo de áreas</div>
             </ons-toolbar>
-
 
             <ons-row style="margin-top: 100px; text-align: center;">
                 <ons-col>
-                    <ons-button modifier="light" ng-click="menu.toggleMenu()">
-                        Toggle Menu
-                    </ons-button>
+                 
+
+
+
                 </ons-col>
             </ons-row>
-
         </ons-page>
     </ons-template>
     <ons-template id="page3.html">
@@ -229,7 +235,7 @@
                         <ons-list-header>Listado de tipos de láminas</ons-list-header>
                         <ons-list ng-repeat="cat in action.catalogo | filter:buscar">
                             
-                            <ons-list-item modifier="chevron" style="font-size: 13px;">{{ cat.tipoLamina }} ({{ cat.ancho }} x {{ cat.alto }} cm) {{ cat.valor|currency }}</ons-list-item>
+                            <ons-list-item modifier="chevron" style="font-size: 13px;">{{ cat.descripcion }}-{{ cat.tipoLamina }} ({{ cat.ancho }} x {{ cat.alto }} cm) {{ cat.valor|currency }}</ons-list-item>
                            
 
                           </ons-list>
@@ -281,7 +287,7 @@
                             <div class="form-row">
                               <select class="text-input width-half" value="" width="90%" name="repeatSelect" ng-model="data.repeatSelect" id="repeatSelect"> 
                                     <option value="">Selecciona un material</option>                               
-                                    <option ng-repeat="option in data.availableOptions" class="text-input--underbar width-half" value="{{ option.valorCm }}">{{ option.tipoLamina }}({{ option.ancho }}x{{ option.alto }} cm) $...{{ option.valor }}</option>
+                                    <option ng-repeat="option in data.availableOptions" class="text-input--underbar width-half" value="{{ option.valorCm }}">{{ option.descripcion }} -- {{ option.tipoLamina }}({{ option.ancho }}x{{ option.alto }} cm) $...{{ option.valor }}</option>
                               </select>
                             </div>
                             <div class="form-row">
@@ -399,7 +405,9 @@
 
       </ons-page>
     </ons-template>
-
+<script type="text/javascript">
+    $('#prueba').draggable();
+</script>
 
 </body>
 

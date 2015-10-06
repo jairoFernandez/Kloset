@@ -21,12 +21,13 @@ app.factory('SincronizarCtrl',function($http){
 			setTimeout(function() {
 				for(i=0; i<response.length; i++){
 					var tipoLamina = response[i]["tipoLamina"];
+					var descripcion = response[i]["descripcion"];
 					var ancho = response[i]["ancho"];
 					var alto = response[i]["alto"];
 					var valor = response[i]["valor"];	
 					var valorCm = response[i]["valorCm"];	
 
-					createLamina(tipoLamina,ancho,alto,valor,valorCm);
+					createLamina(tipoLamina,descripcion,ancho,alto,valor,valorCm);
 				}
 			}, 2000);		 
 			  ons.notification.alert({
